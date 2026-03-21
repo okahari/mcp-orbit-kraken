@@ -21,7 +21,7 @@ const GridStateInputSchema = z.object({
 // ============================================================================
 
 const GRID_CHECK_BASE_URL = process.env.GRID_CHECK_WEBHOOK_URL ?? "http://localhost:3001";
-const GRID_CHECK_SECRET = process.env.GREMBEL_API_KEY ?? "";
+const GRID_CHECK_SECRET = process.env.GRID_WEBHOOK_SECRET ?? "";
 const GRID_CHECK_DEFAULT_PATTERN = "*/5 * * * *";
 
 function buildSchedulingHint(gridId: string) {

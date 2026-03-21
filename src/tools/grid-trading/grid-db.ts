@@ -1,5 +1,7 @@
 import Database from "better-sqlite3";
-import {getDbPath, logger} from "mcp-orbit";
+import {logger} from "mcp-orbit";
+import {resolve, dirname} from "node:path";
+import {mkdirSync} from "node:fs";
 
 const gridDbLogger = logger.child("grid-db");
 let gridDb: Database.Database | null = null;
@@ -37,7 +39,8 @@ export function ensureGridTradingSchema(db: Database.Database): void {
 
 export function getGridDatabase(): Database.Database {
   if (!gridDb) {
-    const dbPath = getDbPath();
+    const dbPath = process.env.KRAKEN_DB_PATH ?? resolve("data", "grids.db");
+    mkdirSync(dirname(dbPath), {recursive: true});
     gridDbLogger.info(`Opening grid database: ${dbPath}`);
     gridDb = new Database(dbPath);
     gridDb.pragma("journal_mode = WAL");

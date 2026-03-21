@@ -1,8 +1,7 @@
 {
   "name": "mcp-plugin-kraken",
   "version": "0.1.0",
-  "private": true,
-  "description": "Kraken exchange MCP server — trading, balances, grid planning",
+  "description": "Kraken exchange MCP plugin for mcp-orbit — trading, balances, grid planning",
   "type": "module",
   "main": "dist/index.js",
   "bin": {
@@ -22,9 +21,9 @@
   "author": "okahari",
   "license": "MIT",
   "dependencies": {
-    "mcp-orbit": "github:okahari/mcp-orbit",
     "better-sqlite3": "^12.6.2",
     "dotenv": "^17.2.3",
+    "mcp-orbit": "^0.1.0",
     "zod": "^3.23.0"
   },
   "devDependencies": {

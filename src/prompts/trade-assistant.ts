@@ -1,31 +1,21 @@
 /**
  * Trade Assistant Prompt
  *
- * Beispiel für ein INTERAKTIVES PROMPT:
- * - Guided workflow für Trading
- * - Multi-turn conversation starter
- * - Mit Safety Checks
+ * Interactive trading workflow with safety checks.
+ * Multi-turn conversation starter that guides the LLM through
+ * market analysis, balance checks, and order execution.
  */
 
 import {z} from "zod";
-import {createAndRegisterPrompt} from "mcp-orbit";
 import type {PromptProvider, PromptMessage} from "mcp-orbit";
 
-/**
- * Arguments Schema
- */
 const TradeAssistantArgsSchema = z.object({
   tradeType: z.enum(["buy", "sell"]).describe("Type of trade to execute"),
   asset: z.string().describe("Asset to trade (e.g., BTC, ETH)"),
   safetyMode: z.boolean().optional().default(true).describe("Enable safety confirmations"),
 });
 
-/**
- * Trade Assistant Prompt
- *
- * Interaktiver Trading-Workflow mit Safety Checks
- */
-const tradeAssistantPrompt: PromptProvider = {
+export const tradeAssistantPrompt: PromptProvider = {
   name: "trade_assistant",
   description: "Interactive trading assistant with safety checks and market analysis",
   arguments: [
@@ -51,7 +41,7 @@ const tradeAssistantPrompt: PromptProvider = {
   async render(args?: Record<string, any>): Promise<PromptMessage[]> {
     const params = TradeAssistantArgsSchema.parse(args);
 
-    const messages: PromptMessage[] = [
+    return [
       {
         role: "user",
         content: {
@@ -67,14 +57,9 @@ const tradeAssistantPrompt: PromptProvider = {
         },
       },
     ];
-
-    return messages;
   },
 };
 
-/**
- * Helper: Baut User Prompt
- */
 function buildTradePrompt(params: z.infer<typeof TradeAssistantArgsSchema>): string {
   const action = params.tradeType === "buy" ? "purchase" : "sell";
 
@@ -90,9 +75,6 @@ ${params.safetyMode ? "5. Risk assessment and confirmation" : ""}
 ${params.safetyMode ? "\n⚠️ IMPORTANT: I want to review all details before executing any trade." : ""}`;
 }
 
-/**
- * Helper: Baut Assistant Response
- */
 function buildAssistantResponse(params: z.infer<typeof TradeAssistantArgsSchema>): string {
   const action = params.tradeType === "buy" ? "buying" : "selling";
 
@@ -110,23 +92,3 @@ ${
 
 Let me fetch the data using the available tools.`;
 }
-
-// ✨ Auto-Registration
-export const prompt = createAndRegisterPrompt(tradeAssistantPrompt);
-
-/**
- * USAGE Scenario:
- *
- * User: "I want to buy some Bitcoin"
- * → Client suggests prompt: "trade_assistant"
- * → User selects, fills: { tradeType: 'buy', asset: 'BTC', safetyMode: true }
- * → Prompt gibt guided conversation zurück
- * → LLM führt aus:
- *   - kraken_get_ticker_info (BTC price)
- *   - kraken_get_account_balance (available funds)
- *   - Analysiert und gibt Empfehlung
- *   - (Mit safetyMode) Wartet auf User-Bestätigung
- *   - kraken_add_order (nur nach Bestätigung!)
- *
- * Das ist ein kompletter Workflow, gepackt in ein Template!
- */

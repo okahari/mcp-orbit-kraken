@@ -3,7 +3,8 @@
 import dotenv from "dotenv";
 dotenv.config({quiet: true});
 
-import {startServer, parseArgs, applyPreInit} from "mcp-orbit";
+import {startServer, parseArgs} from "mcp-orbit";
+import type {MCPPlugin} from "mcp-orbit";
 
 // ── Tools ─────────────────────────────────────────────────────────────────────
 import {krakenTools as krakenTradingTools} from "./tools/kraken/trading.js";
@@ -16,28 +17,48 @@ import {gridPlanTools} from "./tools/grid-trading/grid-plan.js";
 import {gridStateTools} from "./tools/grid-trading/grid-state.js";
 import {gridLogTools} from "./tools/grid-trading/grid-log.js";
 
-// ── Resources & Prompts (auto-register on import) ─────────────────────────────
-import "./resources/config-content.js";
-import "./prompts/analyze-balance.js";
-import "./prompts/trade-assistant.js";
+// ── Resources ─────────────────────────────────────────────────────────────────
+import {configResource} from "./resources/config-content.js";
 
-// ── Start ─────────────────────────────────────────────────────────────────────
-const config = parseArgs();
-applyPreInit(config);
+// ── Prompts ───────────────────────────────────────────────────────────────────
+import {analyzeBalancePrompt} from "./prompts/analyze-balance.js";
+import {tradeAssistantPrompt} from "./prompts/trade-assistant.js";
 
-const allTools = [
-  ...krakenTradingTools,
-  ...krakenPublicTools,
-  ...krakenBalanceTools,
-  ...krakenDepositTools,
-  ...krakenWithdrawalTools,
-  ...krakenMiscTools,
-  ...gridPlanTools,
-  ...gridStateTools,
-  ...gridLogTools,
-];
+// ── Plugin ────────────────────────────────────────────────────────────────────
 
-startServer({...config, tools: allTools}).catch((err: unknown) => {
-  console.error("Server failed to start:", err instanceof Error ? err.message : err);
-  process.exit(1);
-});
+export const krakenPlugin: MCPPlugin = {
+  name: "kraken",
+  version: "0.1.0",
+  description: "Kraken exchange integration — trading, balances, deposits, withdrawals, grid planning",
+  tools: [
+    ...krakenTradingTools,
+    ...krakenPublicTools,
+    ...krakenBalanceTools,
+    ...krakenDepositTools,
+    ...krakenWithdrawalTools,
+    ...krakenMiscTools,
+    ...gridPlanTools,
+    ...gridStateTools,
+    ...gridLogTools,
+  ],
+  resources: [configResource],
+  prompts: [analyzeBalancePrompt, tradeAssistantPrompt],
+};
+
+// ── Standalone server ─────────────────────────────────────────────────────────
+
+const isMain = import.meta.url === `file://${process.argv[1]}` ||
+  process.argv[1]?.endsWith("mcp-plugin-kraken");
+
+if (isMain) {
+  const config = parseArgs();
+  startServer({
+    ...config,
+    plugins: [krakenPlugin],
+    serverName: "mcp-plugin-kraken",
+    serverVersion: "0.1.0",
+  }).catch((err: unknown) => {
+    console.error("Server failed to start:", err instanceof Error ? err.message : err);
+    process.exit(1);
+  });
+}
