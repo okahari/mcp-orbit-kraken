@@ -17,9 +17,6 @@ import {gridPlanTools} from "./tools/grid-trading/grid-plan.js";
 import {gridStateTools} from "./tools/grid-trading/grid-state.js";
 import {gridLogTools} from "./tools/grid-trading/grid-log.js";
 
-// ── Resources ─────────────────────────────────────────────────────────────────
-import {configResource} from "./resources/config-content.js";
-
 // ── Plugin ────────────────────────────────────────────────────────────────────
 
 export const krakenPlugin: MCPPlugin = {
@@ -37,7 +34,6 @@ export const krakenPlugin: MCPPlugin = {
     ...gridStateTools,
     ...gridLogTools,
   ],
-  resources: [configResource],
 };
 
 // ── Standalone server ─────────────────────────────────────────────────────────
