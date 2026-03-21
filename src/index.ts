@@ -20,10 +20,6 @@ import {gridLogTools} from "./tools/grid-trading/grid-log.js";
 // ── Resources ─────────────────────────────────────────────────────────────────
 import {configResource} from "./resources/config-content.js";
 
-// ── Prompts ───────────────────────────────────────────────────────────────────
-import {analyzeBalancePrompt} from "./prompts/analyze-balance.js";
-import {tradeAssistantPrompt} from "./prompts/trade-assistant.js";
-
 // ── Plugin ────────────────────────────────────────────────────────────────────
 
 export const krakenPlugin: MCPPlugin = {
@@ -42,7 +38,6 @@ export const krakenPlugin: MCPPlugin = {
     ...gridLogTools,
   ],
   resources: [configResource],
-  prompts: [analyzeBalancePrompt, tradeAssistantPrompt],
 };
 
 // ── Standalone server ─────────────────────────────────────────────────────────
