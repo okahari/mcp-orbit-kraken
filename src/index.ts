@@ -21,7 +21,7 @@ import {gridLogTools} from "./tools/grid-trading/grid-log.js";
 
 export const krakenPlugin: MCPPlugin = {
   name: "kraken",
-  version: "0.1.0",
+  version: "0.1.1",
   description: "Kraken exchange integration — trading, balances, deposits, withdrawals, grid planning",
   tools: [
     ...krakenTradingTools,

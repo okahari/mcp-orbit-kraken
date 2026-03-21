@@ -1,6 +1,6 @@
 {
   "name": "mcp-plugin-kraken",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Kraken exchange MCP plugin for mcp-orbit — trading, balances, grid planning",
   "type": "module",
   "main": "dist/index.js",
