@@ -14,15 +14,16 @@ await registerPlugin(krakenPlugin);
 startServer({ mode: "stdio", plugins: [krakenPlugin] });
 ```
 
-### Standalone server
+### Manual CLI (lokaler Test)
 
 ```bash
-# stdio mode (for Claude Desktop, etc.)
+# stdio mode (manual run)
 npx mcp-orbit-kraken --stdio
 
 # HTTP mode
 npx mcp-orbit-kraken --http --port 3333
 ```
+> Dieser Schritt ist nur für lokale Tests nötig. Claude Desktop (oder andere MCP-Clients) starten den Server selbstständig über ihre Command/Args-Konfiguration.
 
 ### Claude Desktop configuration
 
