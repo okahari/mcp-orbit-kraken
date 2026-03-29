@@ -39,14 +39,14 @@ export const krakenPlugin: MCPPlugin = {
 // ── Standalone server ─────────────────────────────────────────────────────────
 
 const isMain = import.meta.url === `file://${process.argv[1]}` ||
-  process.argv[1]?.endsWith("mcp-plugin-kraken");
+  process.argv[1]?.endsWith("mcp-orbit-kraken");
 
 if (isMain) {
   const config = parseArgs();
   startServer({
     ...config,
     plugins: [krakenPlugin],
-    serverName: "mcp-plugin-kraken",
+    serverName: "mcp-orbit-kraken",
     serverVersion: "0.1.0",
   }).catch((err: unknown) => {
     console.error("Server failed to start:", err instanceof Error ? err.message : err);

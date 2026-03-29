@@ -1,4 +1,4 @@
-# mcp-plugin-kraken
+# mcp-orbit-kraken
 
 Kraken exchange plugin for [mcp-orbit](https://github.com/okahari/mcp-orbit). Provides 32 MCP tools for trading, account management, and grid trading automation.
 
@@ -8,7 +8,7 @@ Kraken exchange plugin for [mcp-orbit](https://github.com/okahari/mcp-orbit). Pr
 
 ```typescript
 import { registerPlugin, startServer } from "mcp-orbit";
-import { krakenPlugin } from "mcp-plugin-kraken";
+import { krakenPlugin } from "mcp-orbit-kraken";
 
 await registerPlugin(krakenPlugin);
 startServer({ mode: "stdio", plugins: [krakenPlugin] });
@@ -18,10 +18,10 @@ startServer({ mode: "stdio", plugins: [krakenPlugin] });
 
 ```bash
 # stdio mode (for Claude Desktop, etc.)
-npx mcp-plugin-kraken --stdio
+npx mcp-orbit-kraken --stdio
 
 # HTTP mode
-npx mcp-plugin-kraken --http --port 3333
+npx mcp-orbit-kraken --http --port 3333
 ```
 
 ### Claude Desktop configuration
@@ -31,7 +31,7 @@ npx mcp-plugin-kraken --http --port 3333
   "mcpServers": {
     "kraken": {
       "command": "node",
-      "args": ["/path/to/mcp-plugin-kraken/dist/index.js", "--stdio"],
+      "args": ["/path/to/mcp-orbit-kraken/dist/index.js", "--stdio"],
       "env": {
         "KRAKEN_API_KEY": "your-api-key",
         "KRAKEN_PRIVATE_KEY": "your-private-key"

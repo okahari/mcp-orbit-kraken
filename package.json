@@ -1,11 +1,11 @@
 {
-  "name": "mcp-plugin-kraken",
+  "name": "mcp-orbit-kraken",
   "version": "0.1.1",
-  "description": "Kraken exchange MCP plugin for mcp-orbit — trading, balances, grid planning",
+  "description": "Kraken exchange MCP plugin for mcp-orbit \u2014 trading, balances, grid planning",
   "type": "module",
   "main": "dist/index.js",
   "bin": {
-    "mcp-plugin-kraken": "./dist/index.js"
+    "mcp-orbit-kraken": "./dist/index.js"
   },
   "scripts": {
     "build": "rm -rf dist && tsc",
@@ -16,7 +16,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/okahari/mcp-plugin-kraken.git"
+    "url": "https://github.com/okahari/mcp-orbit-kraken.git"
   },
   "author": "okahari",
   "license": "MIT",
